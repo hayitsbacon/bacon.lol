@@ -1,5 +1,5 @@
 node {
-    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+    docker.withRegistry('https://docker.io', 'docker-hub-credentials') {
          
         checkout scm 
         sh "git rev-parse HEAD > .git/commit-id"
