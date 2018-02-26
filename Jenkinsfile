@@ -10,6 +10,7 @@ node {
         def app = docker.build "hayitsbacon/bacon.lol"
     
         stage "publish"
+        sh "docker push hayitsbacon/bacon.lol"
         app.push 'latest'
         app.push "${commit_id}"
     }
