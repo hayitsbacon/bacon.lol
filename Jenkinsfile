@@ -1,4 +1,4 @@
-node("any") {
+node {
     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
          
         git url: "ssh://ec2-user@bacon.lol/~/bacon.lol", credentialsId: 'blueocean-folder-credential-domain'
