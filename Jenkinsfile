@@ -23,7 +23,7 @@ node {
             sshagent (credentials: ['baconlol-ec2']) {
                 sh script: """\
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker pull hayitsbacon/bacon.lol:latest' \
+                              'docker pull hayitsbacon/bacon.lol:latest' && \
                               'docker run -p 80 hayitsbacon/bacon.lol:latest'
                             """, returnStdout: true
             }
