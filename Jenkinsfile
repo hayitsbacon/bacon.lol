@@ -12,11 +12,8 @@ node {
      
      stage("PUBLISH") {
      withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'HUB_USERNAME', passwordVariable: 'HUB_PASSWORD')]) {
-        sh '''docker login --username=$HUB_USERNAME --password=$HUB_PASSWORD && 
-              docker push hayitsbacon/bacon.lol:${commit_id} &&
-              docker push hayitsbacon/bacon.lol:latest'''
-        
-     
+        sh "docker login --username=$HUB_USERNAME --password=$HUB_PASSWORD"
+        sh "docker push hayitsbacon/bacon.lol:${commit_id}"
      }
 }
 }
