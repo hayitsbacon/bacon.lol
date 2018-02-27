@@ -29,9 +29,9 @@ node {
                               echo 'Removed old container'
                               docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol --name=bacon-lol-nginx hayitsbacon/bacon.lol:latest
                               echo 'Run container'
-                              EOF && \
-                              echo 'DEPLOY Success
-                            """, returnStdout: true
+EOF
+                            """, returnStdout: false
+                 sh "echo "DEPLOY Success"
             }
      }
 }
