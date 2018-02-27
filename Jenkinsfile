@@ -8,12 +8,13 @@ node {
      
      stage("BUILD") {
         checkout scm
-        sh "docker build -t hayitsbacon/bacon.lol:build ."
+        def commit_id = readFile('.git/commit-id').trim()
+        sh "docker build -t hayitsbacon/bacon.lol:${commit_id} ."
      }
      
      stage("PUBLISH") {
          def commit_id = readFile('.git/commit-id').trim()
-         sh "docker tag hayitsbacon/bacon.lol:build hayitsbacon/bacon.lol:latest"
+         sh "docker tag hayitsbacon/bacon.lol:${commit_id} hayitsbacon/bacon.lol:latest"
          withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'HUB_USERNAME', passwordVariable: 'HUB_PASSWORD')]) {
             sh "docker login --username=$HUB_USERNAME --password=$HUB_PASSWORD"
             sh "docker push hayitsbacon/bacon.lol:latest && echo 'PUBLISH success'"
