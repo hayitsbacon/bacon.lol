@@ -15,12 +15,16 @@ node {
             def commit_id = readFile('.git/commit-id').trim()
             sh "docker tag hayitsbacon/bacon.lol:build hayitsbacon/bacon.lol:${commit_id}"
             sh "docker login --username=$HUB_USERNAME --password=$HUB_PASSWORD"
-            sh "docker push hayitsbacon/bacon.lol:${commit_id} && echo 'Push success'"
+            sh "docker push hayitsbacon/bacon.lol:${commit_id}"
+            sh "docker push hayitsbacon/bacon.lol:latest && echo 'Push success'"
          }
      }
      stage("DEPLOY") {
             sshagent (credentials: ['baconlol-ec2']) {
-                sh 'ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol docker ps'
+                sh script: """\
+                              ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
+                              'cd ~ && docker-compose up -d' 
+                            """, returnStdout: true
             }
      }
 }
