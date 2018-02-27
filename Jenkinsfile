@@ -28,7 +28,7 @@ node {
                             """, returnStdout: true
                 sh script: """\
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker run -d -p 80 hayitsbacon/bacon.lol:latest' \
+                              'docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol hayitsbacon/bacon.lol:latest' \
                               && echo 'Ran image'
                             """, returnStdout: true
             }
