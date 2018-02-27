@@ -1,6 +1,6 @@
 node {
      stage('CHECKOUT') {
-        sh "git checkout master && git reset --hard HEAD && git pull"
+        checkout scm
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
         println commit_id
