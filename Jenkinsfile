@@ -31,7 +31,6 @@ node {
                               echo 'Run container'
 EOF
                             """, returnStdout: false
-                 sh "echo "DEPLOY Success"
             }
      }
 }
