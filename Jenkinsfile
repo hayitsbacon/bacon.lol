@@ -1,6 +1,6 @@
 node {
      stage('CHECKOUT') {
-        checkout scm 
+        sh "git checkout master && git reset --hard HEAD && git pull"
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
         println commit_id
@@ -25,10 +25,8 @@ node {
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
                               'docker pull hayitsbacon/bacon.lol:latest' \
                               && echo 'Pulled image'
-                            """, returnStdout: true
-                sh script: """\
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol hayitsbacon/bacon.lol:latest' \
+                              'docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol --name=bacon-lol-nginx hayitsbacon/bacon.lol:latest' \
                               && echo 'Ran image'
                             """, returnStdout: true
             }
