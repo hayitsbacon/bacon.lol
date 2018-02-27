@@ -25,7 +25,7 @@ node {
                               'docker pull hayitsbacon/bacon.lol:latest' \
                               && echo 'Pulled container'
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker kill bacon-lol-nginx \
+                              'docker kill bacon-lol-nginx' \
                               && echo 'Killed old container'
                               ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
                               'docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol --name=bacon-lol-nginx hayitsbacon/bacon.lol:latest' \
