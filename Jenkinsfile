@@ -21,15 +21,15 @@ node {
      stage("DEPLOY") {
             sshagent (credentials: ['baconlol-ec2']) {
                 sh script: """\
-                              ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker pull hayitsbacon/bacon.lol:latest' \
-                              && echo 'Pulled container'
-                              ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker kill bacon-lol-nginx' \
-                              && echo 'Killed old container'
-                              ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol \
-                              'docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol --name=bacon-lol-nginx hayitsbacon/bacon.lol:latest' \
-                              && echo 'Ran container'
+                              ssh -o StrictHostKeyChecking=no -l ec2-user bacon.lol /bin/bash << EOF 
+                              docker pull hayitsbacon/bacon.lol:latest 
+                              echo 'Pulled container'
+                              docker kill bacon-lol-nginx
+                              docker rm bacon-lol-nginx
+                              echo 'Removed old container'
+                              docker run -d -p 80 -l traefik.frontend.rule=Host:bacon.lol --name=bacon-lol-nginx hayitsbacon/bacon.lol:latest
+                              echo 'Run container'
+                              EOF
                             """, returnStdout: true
             }
      }
