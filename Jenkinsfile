@@ -7,6 +7,7 @@ node {
      }
      
      stage("BUILD") {
+        checkout scm
         sh "docker build -t hayitsbacon/bacon.lol:build ."
      }
      
